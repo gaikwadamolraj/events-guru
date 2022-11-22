@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+spec:
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+        version: v1
+    spec:
+      containers:
+      - name: order-service
+        image: order-service:1
+        envFrom:
+          - configMapRef:
+              name: eg-config
+          - secretRef:
+              name: eg-secrets
+        resources:
+          limits:
+            memory: "528Mi"
+            cpu: "0.3"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-svc
+spec:
+  selector:
+    app: order-service
+  ports:
+  - port: 50052
+    name: grpc
+    protocol: TCP 
+  
