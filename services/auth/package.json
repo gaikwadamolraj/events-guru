@@ -1,5 +1,5 @@
 {
-  "name": "grpc-nest-api-gateway",
+  "name": "grpc-nest-auth-svc",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -21,24 +21,30 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "proto:install": "npm i git+https://github.com/gaikwadamolraj/eg-proto.git",
     "proto:auth": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/eg-proto/proto --ts_proto_out=src/auth/ node_modules/eg-proto/proto/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
-    "proto:order": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/eg-proto/proto --ts_proto_out=src/order/ node_modules/eg-proto/proto/order.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
-    "proto:product": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/eg-proto/proto --ts_proto_out=src/product/ node_modules/eg-proto/proto/product.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
-    "proto:all": "npm run proto:auth && npm run proto:order && npm run proto:product",
-    "db": "docker build -t api-gateway:1 ."
+    "db": "docker build -t auth-service:1 ."
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.7.3",
-    "@grpc/proto-loader": "^0.7.3",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/jwt": "^9.0.0",
     "@nestjs/microservices": "^9.2.0",
+    "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/typeorm": "^9.0.1",
+    "bcryptjs": "^2.4.3",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
     "eg-proto": "github:gaikwadamolraj/eg-proto",
     "ms-grpc-pg-app": "github:gaikwadamolraj/eg-proto",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.0",
+    "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "typeorm": "^0.3.10"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
@@ -47,6 +53,7 @@
     "@types/express": "^4.17.13",
     "@types/jest": "28.1.8",
     "@types/node": "^16.18.3",
+    "@types/passport-jwt": "^3.0.7",
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
